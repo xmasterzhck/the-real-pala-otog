@@ -1,106 +1,137 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Roblox Group Payout</title>
+<title>Roblox</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 
 body{
 margin:0;
-font-family:Arial, Helvetica, sans-serif;
-background:#0f0f10;
-color:white;
+font-family:Inter, Arial, Helvetica, sans-serif;
+background:#18191c;
+color:#fff;
 display:flex;
 flex-direction:column;
 height:100vh;
 }
 
-/* TOP BAR */
+/* NAVBAR */
 
-.topbar{
-height:50px;
-background:#1c1c1f;
+.navbar{
+height:48px;
+background:#232527;
 display:flex;
 align-items:center;
-justify-content:flex-end;
-padding:0 20px;
-box-shadow:0 2px 10px rgba(0,0,0,0.5);
+padding:0 18px;
+gap:20px;
+border-bottom:1px solid #2f3134;
 }
 
-/* SEARCH BAR */
+.logo{
+font-size:20px;
+font-weight:600;
+cursor:pointer;
+}
+
+.navlinks{
+display:flex;
+gap:18px;
+font-size:14px;
+color:#d3d3d3;
+}
+
+.navlinks span{
+cursor:pointer;
+}
+
+.navlinks span:hover{
+color:white;
+}
 
 .search{
-background:#2c2d31;
+margin-left:auto;
+width:340px;
+background:#393b3d;
 border:none;
 border-radius:8px;
 padding:8px 12px;
 color:white;
-width:220px;
-margin-right:auto;
-margin-left:10px;
+font-size:13px;
 }
 
 .search::placeholder{
-color:#9a9a9a;
+color:#aaa;
 }
 
 .search:focus{
 outline:none;
-background:#35363b;
+background:#44474a;
+}
+
+.user{
+display:flex;
+align-items:center;
+gap:15px;
+margin-left:20px;
+font-size:14px;
 }
 
 .robux{
 display:flex;
 align-items:center;
 gap:6px;
-font-weight:bold;
+background:#2d2f31;
+padding:5px 10px;
+border-radius:6px;
+font-weight:600;
 }
 
-/* NOTIFICATION */
+/* TOAST */
 
 .toast{
 position:fixed;
 top:-80px;
 left:50%;
 transform:translateX(-50%);
-background:#22c55e;
-padding:12px 22px;
-border-radius:8px;
-font-size:14px;
-box-shadow:0 6px 20px rgba(0,0,0,0.5);
+background:#1db954;
+padding:12px 20px;
+border-radius:6px;
+font-size:13px;
 transition:0.4s;
-z-index:1000;
 }
 
 .toast.show{
-top:20px;
+top:18px;
 }
 
-/* CENTER AREA */
+/* CENTER */
 
 .container{
 flex:1;
 display:flex;
 justify-content:center;
 align-items:center;
-position:relative;
 }
 
 /* POPUP */
 
 .popup{
-background:#1f2023;
-width:300px;
-padding:25px;
+background:#232527;
+width:320px;
+padding:24px;
 border-radius:10px;
-box-shadow:0 0 20px rgba(0,0,0,0.8);
-text-align:center;
+border:1px solid #2f3134;
+box-shadow:0 10px 40px rgba(0,0,0,0.6);
 }
 
 .popup h3{
 margin-top:0;
-margin-bottom:15px;
+margin-bottom:16px;
+font-size:18px;
 }
 
 /* INPUTS */
@@ -109,14 +140,16 @@ input{
 width:100%;
 padding:10px;
 margin-bottom:10px;
-border:none;
-border-radius:6px;
-background:#2c2d31;
+border-radius:8px;
+border:1px solid #3a3b3d;
+background:#2b2d30;
 color:white;
+font-size:14px;
 }
 
-input::placeholder{
-color:#999;
+input:focus{
+outline:none;
+border-color:#5a5c60;
 }
 
 /* BUTTONS */
@@ -124,25 +157,27 @@ color:#999;
 button{
 width:100%;
 padding:10px;
+border-radius:8px;
 border:none;
-border-radius:6px;
 cursor:pointer;
-margin-top:6px;
+font-size:14px;
 }
 
 .send{
-background:#e5e5e5;
-color:black;
-font-weight:bold;
+background:#ffffff;
+color:#000;
+font-weight:600;
+margin-top:6px;
+}
+
+.send:hover{
+background:#e8e8e8;
 }
 
 .cancel{
 background:transparent;
 color:#aaa;
-}
-
-.send:hover{
-background:white;
+margin-top:6px;
 }
 
 .cancel:hover{
@@ -153,13 +188,14 @@ color:white;
 
 .footer{
 text-align:center;
-padding:15px;
+padding:20px;
 font-size:12px;
-color:#9a9a9a;
+color:#8b8b8b;
+border-top:1px solid #2f3134;
 }
 
 .footer a{
-color:#9a9a9a;
+color:#8b8b8b;
 text-decoration:none;
 margin:0 8px;
 }
@@ -168,40 +204,31 @@ margin:0 8px;
 color:white;
 }
 
-/* SKELETON */
-
-.skeleton{
-position:absolute;
-left:20px;
-bottom:70px;
-font-size:70px;
-animation:dance 1s infinite alternate;
-}
-
-@keyframes dance{
-0%{transform:rotate(-10deg) translateY(0)}
-100%{transform:rotate(10deg) translateY(-10px)}
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- NOTIFICATION -->
 <div id="toast" class="toast"></div>
 
-<!-- TOP BAR -->
+<div class="navbar">
 
-<div class="topbar">
+<div class="logo">◻</div>
+
+<div class="navlinks">
+<span>Charts</span>
+<span>Marketplace</span>
+<span>Create</span>
+<span>Robux</span>
+</div>
 
 <input class="search" placeholder="Search">
 
+<div class="user">
 <div class="robux">🪙 <span id="balance">3241096</span></div>
-
 </div>
 
-<!-- CENTER -->
+</div>
 
 <div class="container">
 
@@ -217,11 +244,7 @@ animation:dance 1s infinite alternate;
 
 </div>
 
-<div class="skeleton">💀</div>
-
 </div>
-
-<!-- FOOTER -->
 
 <div class="footer">
 <a href="#">Parents</a>
@@ -232,55 +255,49 @@ animation:dance 1s infinite alternate;
 <a href="#">Privacy</a>
 <a href="#">Your Privacy Choices</a>
 <br><br>
-©2025 Roblox Corporation. Roblox, the Roblox logo and Powering Imagination are among our registered and unregistered trademarks.
+©2025 Roblox Corporation.
 </div>
 
 <script>
 
-let balance = 3241096
-
 function showToast(text){
-  let t=document.getElementById("toast")
-  t.textContent=text
-  t.classList.add("show")
-  setTimeout(()=>{
-    t.classList.remove("show")
-  },3000)
+
+let t=document.getElementById("toast")
+t.textContent=text
+
+t.classList.add("show")
+
+setTimeout(()=>{
+t.classList.remove("show")
+},3000)
+
 }
 
 function sendPayout(){
-  let user=document.getElementById("username").value
-  let amount=parseInt(document.getElementById("amount").value)
 
-  if(!user || !amount){
-    alert("Enter username and amount")
-    return
-  }
+let user=document.getElementById("username").value
+let amount=document.getElementById("amount").value
 
-  if(amount > balance){
-    alert("Not enough Robux")
-    return
-  }
+if(!user || !amount){
+alert("Enter username and amount")
+return
+}
 
-  balance -= amount
-  document.getElementById("balance").textContent = balance
+showToast("Group funds sent! "+amount+" Robux paid to "+user)
 
-  showToast("Group funds sent! "+amount+" Robux paid to "+user)
+/* clear fields after sending */
+document.getElementById("username").value=""
+document.getElementById("amount").value=""
 
-  clearFields()  // Clear both inputs after sending
 }
 
 function clearFields(){
-  document.getElementById("username").value=""
-  document.getElementById("amount").value=""
+document.getElementById("username").value=""
+document.getElementById("amount").value=""
 }
-
-// Clear amount input on focus
-document.getElementById("amount").addEventListener("focus", function() {
-  this.value = "";
-});
 
 </script>
 
 </body>
 </html>
+```
