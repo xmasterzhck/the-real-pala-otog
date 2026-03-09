@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Roblox Group Payout</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:#0f0f10;
+color:white;
+display:flex;
+flex-direction:column;
+height:100vh;
+}
+
+/* TOP BAR */
+
+.topbar{
+height:50px;
+background:#1c1c1f;
+display:flex;
+align-items:center;
+justify-content:flex-end;
+padding:0 20px;
+box-shadow:0 2px 10px rgba(0,0,0,0.5);
+}
+
+/* SEARCH BAR */
+
+.search{
+background:#2c2d31;
+border:none;
+border-radius:8px;
+padding:8px 12px;
+color:white;
+width:220px;
+margin-right:auto;
+margin-left:10px;
+}
+
+.search::placeholder{
+color:#9a9a9a;
+}
+
+.search:focus{
+outline:none;
+background:#35363b;
+}
+
+.robux{
+display:flex;
+align-items:center;
+gap:6px;
+font-weight:bold;
+}
+
+/* NOTIFICATION */
+
+.toast{
+position:fixed;
+top:-80px;
+left:50%;
+transform:translateX(-50%);
+background:#22c55e;
+padding:12px 22px;
+border-radius:8px;
+font-size:14px;
+box-shadow:0 6px 20px rgba(0,0,0,0.5);
+transition:0.4s;
+z-index:1000;
+}
+
+.toast.show{
+top:20px;
+}
+
+/* CENTER AREA */
+
+.container{
+flex:1;
+display:flex;
+justify-content:center;
+align-items:center;
+position:relative;
+}
+
+/* POPUP */
+
+.popup{
+background:#1f2023;
+width:300px;
+padding:25px;
+border-radius:10px;
+box-shadow:0 0 20px rgba(0,0,0,0.8);
+text-align:center;
+}
+
+.popup h3{
+margin-top:0;
+margin-bottom:15px;
+}
+
+/* INPUTS */
+
+input{
+width:100%;
+padding:10px;
+margin-bottom:10px;
+border:none;
+border-radius:6px;
+background:#2c2d31;
+color:white;
+}
+
+input::placeholder{
+color:#999;
+}
+
+/* BUTTONS */
+
+button{
+width:100%;
+padding:10px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+margin-top:6px;
+}
+
+.send{
+background:#e5e5e5;
+color:black;
+font-weight:bold;
+}
+
+.cancel{
+background:transparent;
+color:#aaa;
+}
+
+.send:hover{
+background:white;
+}
+
+.cancel:hover{
+color:white;
+}
+
+/* FOOTER */
+
+.footer{
+text-align:center;
+padding:15px;
+font-size:12px;
+color:#9a9a9a;
+}
+
+.footer a{
+color:#9a9a9a;
+text-decoration:none;
+margin:0 8px;
+}
+
+.footer a:hover{
+color:white;
+}
+
+/* SKELETON */
+
+.skeleton{
+position:absolute;
+left:20px;
+bottom:70px;
+font-size:70px;
+animation:dance 1s infinite alternate;
+}
+
+@keyframes dance{
+0%{transform:rotate(-10deg) translateY(0)}
+100%{transform:rotate(10deg) translateY(-10px)}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NOTIFICATION -->
+<div id="toast" class="toast"></div>
+
+<!-- TOP BAR -->
+
+<div class="topbar">
+
+<input class="search" placeholder="Search">
+
+<div class="robux">🪙 <span id="balance">3241096</span></div>
+
+</div>
+
+<!-- CENTER -->
+
+<div class="container">
+
+<div class="popup">
+
+<h3>Send Group Payout</h3>
+
+<input id="username" placeholder="Username">
+<input id="amount" type="number" placeholder="Amount (R$)">
+
+<button class="send" onclick="sendPayout()">Send</button>
+<button class="cancel" onclick="clearFields()">Cancel</button>
+
+</div>
+
+<div class="skeleton">💀</div>
+
+</div>
+
+<!-- FOOTER -->
+
+<div class="footer">
+<a href="#">Parents</a>
+<a href="#">Gift Cards</a>
+<a href="#">Help</a>
+<a href="#">Terms</a>
+<a href="#">Accessibility</a>
+<a href="#">Privacy</a>
+<a href="#">Your Privacy Choices</a>
+<br><br>
+©2025 Roblox Corporation. Roblox, the Roblox logo and Powering Imagination are among our registered and unregistered trademarks.
+</div>
+
+<script>
+
+let balance = 3241096
+
+function showToast(text){
+  let t=document.getElementById("toast")
+  t.textContent=text
+  t.classList.add("show")
+  setTimeout(()=>{
+    t.classList.remove("show")
+  },3000)
+}
+
+function sendPayout(){
+  let user=document.getElementById("username").value
+  let amount=parseInt(document.getElementById("amount").value)
+
+  if(!user || !amount){
+    alert("Enter username and amount")
+    return
+  }
+
+  if(amount > balance){
+    alert("Not enough Robux")
+    return
+  }
+
+  balance -= amount
+  document.getElementById("balance").textContent = balance
+
+  showToast("Group funds sent! "+amount+" Robux paid to "+user)
+
+  clearFields()  // Clear both inputs after sending
+}
+
+function clearFields(){
+  document.getElementById("username").value=""
+  document.getElementById("amount").value=""
+}
+
+// Clear amount input on focus
+document.getElementById("amount").addEventListener("focus", function() {
+  this.value = "";
+});
+
+</script>
+
+</body>
+</html>
