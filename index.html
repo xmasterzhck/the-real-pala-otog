@@ -1,255 +1,40 @@
-html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<title>Roblox</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Game Payout Dashboard</title>
 
-<style>
+<link rel="stylesheet" href="css/styles.css">
 
-body{
-margin:0;
-font-family:Inter, Arial, Helvetica, sans-serif;
-background:#18191c;
-color:#fff;
-display:flex;
-flex-direction:column;
-height:100vh;
-}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-/* NAVBAR */
-
-.navbar{
-height:48px;
-background:#232527;
-display:flex;
-align-items:center;
-padding:0 18px;
-gap:20px;
-border-bottom:1px solid #2f3134;
-}
-
-.logo{
-font-size:20px;
-font-weight:600;
-cursor:pointer;
-}
-
-.navlinks{
-display:flex;
-gap:18px;
-font-size:14px;
-color:#d3d3d3;
-}
-
-.navlinks span{
-cursor:pointer;
-}
-
-.navlinks span:hover{
-color:white;
-}
-
-.search{
-margin-left:auto;
-width:340px;
-background:#393b3d;
-border:none;
-border-radius:8px;
-padding:8px 12px;
-color:white;
-font-size:13px;
-}
-
-.search::placeholder{
-color:#aaa;
-}
-
-.search:focus{
-outline:none;
-background:#44474a;
-}
-
-.user{
-display:flex;
-align-items:center;
-gap:15px;
-margin-left:20px;
-font-size:14px;
-}
-
-.robux{
-display:flex;
-align-items:center;
-gap:8px;
-background:#2d2f31;
-padding:5px 10px;
-border-radius:6px;
-font-weight:600;
-}
-
-/* ROBUX ICON */
-
-.robux-icon{
-width:16px;
-height:16px;
-background:linear-gradient(145deg,#ffffff,#d9d9d9);
-transform:rotate(45deg);
-border-radius:2px;
-position:relative;
-box-shadow:
-0 1px 2px rgba(0,0,0,0.4),
-inset 0 1px 1px rgba(255,255,255,0.5);
-}
-
-.robux-hole{
-width:6px;
-height:6px;
-background:#2d2f31;
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-border-radius:1px;
-}
-
-/* TOAST */
-
-.toast{
-position:fixed;
-top:-80px;
-left:50%;
-transform:translateX(-50%);
-background:#1db954;
-padding:12px 20px;
-border-radius:6px;
-font-size:13px;
-transition:0.4s;
-}
-
-.toast.show{
-top:18px;
-}
-
-/* CENTER */
-
-.container{
-flex:1;
-display:flex;
-justify-content:center;
-align-items:center;
-}
-
-/* POPUP */
-
-.popup{
-background:#232527;
-width:320px;
-padding:24px;
-border-radius:10px;
-border:1px solid #2f3134;
-box-shadow:0 10px 40px rgba(0,0,0,0.6);
-}
-
-.popup h3{
-margin-top:0;
-margin-bottom:16px;
-font-size:18px;
-}
-
-/* INPUTS */
-
-input{
-width:100%;
-padding:10px;
-margin-bottom:10px;
-border-radius:8px;
-border:1px solid #3a3b3d;
-background:#2b2d30;
-color:white;
-font-size:14px;
-}
-
-input:focus{
-outline:none;
-border-color:#5a5c60;
-}
-
-/* BUTTONS */
-
-button{
-width:100%;
-padding:10px;
-border-radius:8px;
-border:none;
-cursor:pointer;
-font-size:14px;
-}
-
-.send{
-background:#ffffff;
-color:#000;
-font-weight:600;
-margin-top:6px;
-}
-
-.send:hover{
-background:#e8e8e8;
-}
-
-.cancel{
-background:transparent;
-color:#aaa;
-margin-top:6px;
-}
-
-.cancel:hover{
-color:white;
-}
-
-/* FOOTER */
-
-.footer{
-text-align:center;
-padding:20px;
-font-size:12px;
-color:#8b8b8b;
-border-top:1px solid #2f3134;
-}
-
-.footer a{
-color:#8b8b8b;
-text-decoration:none;
-margin:0 8px;
-}
-
-.footer a:hover{
-color:white;
-}
-
-</style>
 </head>
 
 <body>
 
 <div id="toast" class="toast"></div>
 
+<!-- NAVBAR -->
+
 <div class="navbar">
 
-<div class="logo">◻</div>
+<div class="logo">GAME PANEL</div>
 
 <div class="navlinks">
 <span>Charts</span>
 <span>Marketplace</span>
 <span>Create</span>
-<span>Robux</span>
+<span>Currency</span>
 </div>
 
 <input class="search" placeholder="Search">
 
 <div class="user">
+
 <div class="robux">
 
 <div class="robux-icon">
@@ -259,9 +44,13 @@ color:white;
 <span id="balance">3241096</span>
 
 </div>
+
 </div>
 
 </div>
+
+
+<!-- MAIN -->
 
 <div class="container">
 
@@ -269,8 +58,15 @@ color:white;
 
 <h3>Send Group Payout</h3>
 
-<input id="username" placeholder="Username">
-<input id="amount" type="number" placeholder="Amount (R$)">
+<div class="suggestion-wrapper">
+
+<input id="username" placeholder="Search player username" autocomplete="off">
+
+<div id="suggestions" class="suggestions"></div>
+
+</div>
+
+<input id="amount" type="number" placeholder="Amount">
 
 <button class="send" onclick="sendPayout()">Send</button>
 <button class="cancel" onclick="clearFields()">Cancel</button>
@@ -279,56 +75,35 @@ color:white;
 
 </div>
 
+
+<!-- LOADING -->
+
+<div id="loading" class="loading-screen">
+Sending currency...
+</div>
+
+
+<!-- FOOTER -->
+
 <div class="footer">
+
 <a href="#">Parents</a>
 <a href="#">Gift Cards</a>
 <a href="#">Help</a>
 <a href="#">Terms</a>
 <a href="#">Accessibility</a>
 <a href="#">Privacy</a>
-<a href="#">Your Privacy Choices</a>
+
 <br><br>
-©2025 Roblox Corporation.
+
+©2026 Game Platform
+
 </div>
 
-<script>
 
-function showToast(text){
-
-let t=document.getElementById("toast")
-t.textContent=text
-
-t.classList.add("show")
-
-setTimeout(()=>{
-t.classList.remove("show")
-},3000)
-
-}
-
-function sendPayout(){
-
-let user=document.getElementById("username").value
-let amount=document.getElementById("amount").value
-
-if(!user || !amount){
-alert("Enter username and amount")
-return
-}
-
-showToast("Group funds sent! "+amount+" Robux paid to "+user)
-
-document.getElementById("username").value=""
-document.getElementById("amount").value=""
-
-}
-
-function clearFields(){
-document.getElementById("username").value=""
-document.getElementById("amount").value=""
-}
-
-</script>
+<script src="js/searchUsers.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/app.js"></script>
 
 </body>
 </html>
